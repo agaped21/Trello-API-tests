@@ -10,6 +10,7 @@ import org.testng.annotations.Test;
 public class BoardTests {
 
     public static final String validBoarId = "6888addd7c47050f613d1cce";
+    public static final String invalidBoardId= "6000addd7c47050f613d1cce";
     private BoardClient boardClient;
 
     @BeforeClass
@@ -43,9 +44,9 @@ public class BoardTests {
     }
 
     @Test
-    public void shouldReturn400ForInvalidBoardId() {
-        Response response = boardClient.getBoard("fakeBoardId123");
-        Assert.assertEquals(response.statusCode(), 400);
+    public void shouldReturn404ForInvalidBoardId() {
+        Response response = boardClient.getBoard(invalidBoardId);
+        Assert.assertEquals(response.statusCode(), 404);
     }
 
     @Test
