@@ -22,4 +22,24 @@ public class BoardClient {
                 .queryParam("token", trelloToken)
                 .when().get();
     }
+
+    public Response getBoardWithToken(String boardId, String token) {
+
+        return given()
+                .baseUri(trelloBaseUri)
+                .basePath(trelloBasePath + boardId)
+                .queryParam("key", trelloKey)
+                .queryParam("token", token)
+                .when().get();
+    }
+
+    public Response getBoardWithKey(String boardId, String key) {
+
+        return given()
+                .baseUri(trelloBaseUri)
+                .basePath(trelloBasePath + boardId)
+                .queryParam("key", key)
+                .queryParam("token", trelloToken)
+                .when().get();
+    }
 }

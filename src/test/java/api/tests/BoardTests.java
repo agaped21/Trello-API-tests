@@ -6,6 +6,7 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+
 public class BoardTests {
 
     private BoardClient boardClient;
@@ -40,4 +41,45 @@ public class BoardTests {
         Assert.assertEquals(prefsVisibility, "private");
     }
 
+    @Test
+    public void shouldReturn400ForInvalidBoardId() {
+        Response response = boardClient.getBoard("fakeBoardId123");
+        Assert.assertEquals(response.statusCode(), 400);
+    }
+
+    @Test
+    public void shouldReturn404ForEmptyBoardId() {
+        Response response = boardClient.getBoard("");
+        Assert.assertEquals(response.statusCode(), 404);
+    }
+
+    @Test
+    public void shouldReturn400ForNullBoardId() {
+        Response response = boardClient.getBoard(null);
+        Assert.assertEquals(response.statusCode(), 400);
+    }
+
+    @Test
+    public void shouldReturn401ForInvalidToken() {
+        Response response = boardClient.getBoardWithToken("6888addd7c47050f613d1cce", "abcd1234");
+        Assert.assertEquals(response.statusCode(), 401);
+    }
+
+    @Test
+    public void shouldReturn401ForMissingToken() {
+        Response response = boardClient.getBoardWithToken("6888addd7c47050f613d1cce", null);
+        Assert.assertEquals(response.statusCode(), 401);
+    }
+
+    @Test
+    public void shouldReturn401ForInvalidKey() {
+        Response response = boardClient.getBoardWithKey("6888addd7c47050f613d1cce", "abcd1234");
+        Assert.assertEquals(response.statusCode(), 401);
+    }
+
+    @Test
+    public void shouldReturn401ForMissingKey() {
+        Response response = boardClient.getBoardWithKey("6888addd7c47050f613d1cce", null);
+        Assert.assertEquals(response.statusCode(), 401);
+    }
 }
