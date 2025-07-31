@@ -9,7 +9,7 @@ import org.testng.annotations.Test;
 
 public class BoardTests {
 
-    public static final String validBoarId = "6888addd7c47050f613d1cce";
+    public static final String validBoardId = "6888addd7c47050f613d1cce";
     public static final String invalidBoardId= "6000addd7c47050f613d1cce";
     private BoardClient boardClient;
 
@@ -20,24 +20,24 @@ public class BoardTests {
 
     @Test
     public void getBoard_shouldReturn200() {
-        Response board = boardClient.getBoard(validBoarId);
+        Response board = boardClient.getBoard(validBoardId);
         Assert.assertEquals(board.statusCode(), 200);
     }
 
     @Test
     public void getBoard_shouldReturnCorrectNameAndId() {
-        Response board = boardClient.getBoard(validBoarId);
+        Response board = boardClient.getBoard(validBoardId);
 
         String id = board.jsonPath().getString("id");
         String name = board.jsonPath().getString("name");
 
-        Assert.assertEquals(id, validBoarId);
+        Assert.assertEquals(id, validBoardId);
         Assert.assertEquals(name, "Trello API tests");
     }
 
     @Test
     public void getBoard_shouldReturnPrefsObject() {
-        Response board = boardClient.getBoard(validBoarId);
+        Response board = boardClient.getBoard(validBoardId);
         String prefsVisibility = board.jsonPath().getString("prefs.permissionLevel");
 
         Assert.assertEquals(prefsVisibility, "private");
@@ -63,25 +63,25 @@ public class BoardTests {
 
     @Test
     public void shouldReturn401ForInvalidToken() {
-        Response response = boardClient.getBoardWithToken(validBoarId, "abcd1234");
+        Response response = boardClient.getBoardWithToken(validBoardId, "abcd1234");
         Assert.assertEquals(response.statusCode(), 401);
     }
 
     @Test
     public void shouldReturn401ForMissingToken() {
-        Response response = boardClient.getBoardWithToken(validBoarId, null);
+        Response response = boardClient.getBoardWithToken(validBoardId, null);
         Assert.assertEquals(response.statusCode(), 401);
     }
 
     @Test
     public void shouldReturn401ForInvalidKey() {
-        Response response = boardClient.getBoardWithKey(validBoarId, "abcd1234");
+        Response response = boardClient.getBoardWithKey(validBoardId, "abcd1234");
         Assert.assertEquals(response.statusCode(), 401);
     }
 
     @Test
     public void shouldReturn401ForMissingKey() {
-        Response response = boardClient.getBoardWithKey(validBoarId, null);
+        Response response = boardClient.getBoardWithKey(validBoardId, null);
         Assert.assertEquals(response.statusCode(), 401);
     }
 }
