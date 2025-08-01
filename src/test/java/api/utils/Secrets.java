@@ -15,7 +15,7 @@ public class Secrets {
         try (InputStream input = new FileInputStream("src/test/resources/config.properties")) {
             props.load(input);
         } catch (IOException e) {
-            throw new RuntimeException("Błąd ładowania sekretu: ", e);
+            throw new RuntimeException("Error loading configuration: ", e);
         }
     }
 
@@ -34,6 +34,6 @@ public class Secrets {
             return value;
         }
 
-        throw new RuntimeException("Nie udało się załadować sekretu: " + keyName);
+        throw new RuntimeException("Secret not loaded: " + keyName);
     }
 }

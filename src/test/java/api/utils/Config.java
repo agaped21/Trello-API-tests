@@ -16,7 +16,7 @@ public class Config {
         try (InputStream input = new FileInputStream("src/test/resources/config.properties")) {
             props.load(input);
         } catch (IOException e) {
-            throw new RuntimeException("Błąd ładowania konfiguracji: ", e);
+            throw new RuntimeException("Error loading configuration: ", e);
         }
     }
 
@@ -35,6 +35,6 @@ public class Config {
             return value;
         }
 
-        throw new RuntimeException("Błąd ładowania konfiguracji: " + keyName);
+        throw new RuntimeException("Config property not loaded: " + keyName);
     }
 }
