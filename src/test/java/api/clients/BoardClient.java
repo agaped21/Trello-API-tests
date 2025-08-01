@@ -16,14 +16,14 @@ public class BoardClient {
                 .when().get();
     }
 
-    public Response getBoardWithToken(String boardId, String token) {
+    public Response getBoardWithCustomToken(String boardId, String token) {
         return given()
                 .spec(RequestFactory.withCustomToken(token))
                 .basePath(trelloBasePath + boardId)
                 .when().get();
     }
 
-    public Response getBoardWithKey(String boardId, String key) {
+    public Response getBoardWithCustomKey(String boardId, String key) {
         return given()
                 .spec(RequestFactory.withCustomKey(key))
                 .basePath(trelloBasePath + boardId)
