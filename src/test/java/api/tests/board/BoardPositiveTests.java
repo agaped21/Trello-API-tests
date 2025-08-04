@@ -1,10 +1,13 @@
 package api.tests.board;
 
 import api.clients.BoardClient;
+import api.models.Board;
 import io.restassured.response.Response;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 public class BoardPositiveTests {
@@ -17,28 +20,30 @@ public class BoardPositiveTests {
         boardClient = new BoardClient();
     }
 
+    private Board getBoard() {
+        return boardClient.getBoard(validBoardId).as(Board.class);
+    }
+
     @Test
     public void getBoard_shouldReturn200() {
         Response board = boardClient.getBoard(validBoardId);
-        Assert.assertEquals(board.statusCode(), 200);
+        assertThat(board.statusCode()).isEqualTo(200);
     }
 
     @Test
     public void getBoard_shouldReturnCorrectNameAndId() {
-        Response board = boardClient.getBoard(validBoardId);
+        Board board = getBoard();
 
-        String id = board.jsonPath().getString("id");
-        String name = board.jsonPath().getString("name");
-
-        Assert.assertEquals(id, validBoardId);
-        Assert.assertEquals(name, "Trello API tests");
+        assertThat(board.getId()).isEqualTo(validBoardId);
+        assertThat(board.getName()).isEqualTo("Trello API tests");
     }
 
     @Test
     public void getBoard_shouldReturnPrefsObject() {
-        Response board = boardClient.getBoard(validBoardId);
-        String prefsVisibility = board.jsonPath().getString("prefs.permissionLevel");
+        Board board = getBoard();
 
-        Assert.assertEquals(prefsVisibility, "private");
+        assertThat(board.getPrefs().getPermissionLevel()).isEqualTo("private");
     }
+
+
 }

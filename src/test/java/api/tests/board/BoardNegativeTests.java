@@ -2,9 +2,10 @@ package api.tests.board;
 
 import api.clients.BoardClient;
 import io.restassured.response.Response;
-import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class BoardNegativeTests {
 
@@ -20,42 +21,42 @@ public class BoardNegativeTests {
     @Test
     public void shouldReturn404ForInvalidBoardId() {
         Response response = boardClient.getBoard(invalidBoardId);
-        Assert.assertEquals(response.statusCode(), 404);
+        assertThat(response.statusCode()).isEqualTo(404);
     }
 
     @Test
     public void shouldReturn404ForEmptyBoardId() {
         Response response = boardClient.getBoard("");
-        Assert.assertEquals(response.statusCode(), 404);
+        assertThat(response.statusCode()).isEqualTo(404);
     }
 
     @Test
     public void shouldReturn400ForNullBoardId() {
         Response response = boardClient.getBoard(null);
-        Assert.assertEquals(response.statusCode(), 400);
+        assertThat(response.statusCode()).isEqualTo(400);
     }
 
     @Test
     public void shouldReturn401ForInvalidToken() {
         Response response = boardClient.getBoardWithCustomToken(validBoardId, "abcd1234");
-        Assert.assertEquals(response.statusCode(), 401);
+        assertThat(response.statusCode()).isEqualTo(401);
     }
 
     @Test
     public void shouldReturn401ForMissingToken() {
         Response response = boardClient.getBoardWithCustomToken(validBoardId, null);
-        Assert.assertEquals(response.statusCode(), 401);
+        assertThat(response.statusCode()).isEqualTo(401);
     }
 
     @Test
     public void shouldReturn401ForInvalidKey() {
         Response response = boardClient.getBoardWithCustomKey(validBoardId, "abcd1234");
-        Assert.assertEquals(response.statusCode(), 401);
+        assertThat(response.statusCode()).isEqualTo(401);
     }
 
     @Test
     public void shouldReturn401ForMissingKey() {
         Response response = boardClient.getBoardWithCustomKey(validBoardId, null);
-        Assert.assertEquals(response.statusCode(), 401);
+        assertThat(response.statusCode()).isEqualTo(401);
     }
 }
